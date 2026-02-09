@@ -1,6 +1,7 @@
 # Implementation Plan
 
-- [ ] 1. Initialize Next.js project with TypeScript and core dependencies
+- [-] 1. Initialize Next.js project with TypeScript and core dependencies
+
   - Create Next.js 14+ project with App Router and TypeScript
   - Install and configure Tailwind CSS with dark mode
   - Install shadcn/ui and initialize with dark theme
