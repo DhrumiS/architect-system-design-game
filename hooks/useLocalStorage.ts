@@ -8,13 +8,12 @@ import { safeLocalStorageGet, safeLocalStorageSet } from '@/lib/storage';
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
   // State to store our value
   const [storedValue, setStoredValue] = useState<T>(() => {
-    // Only access localStorage on client side
     if (typeof window === 'undefined') {
       return initialValue;
     }
     return safeLocalStorageGet(key, initialValue);
   });
-
+  
   // Return a wrapped version of useState's setter function that
   // persists the new value to localStorage
   const setValue = (value: T) => {
@@ -33,7 +32,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T)
       console.error(`Error setting localStorage key "${key}":`, error);
     }
   };
-
+  
   return [storedValue, setValue];
 }
 
@@ -45,13 +44,13 @@ export function useLocalStorageListener(key: string, callback: (newValue: string
     if (typeof window === 'undefined') {
       return;
     }
-
+    
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === key) {
         callback(e.newValue);
       }
     };
-
+    
     window.addEventListener('storage', handleStorageChange);
     
     return () => {
