@@ -1,77 +1,47 @@
 Architect — System Design Strategy Game
+Overview
 
-Architect is a frontend-only system design simulator that lets developers design software architectures visually and receive real-time feedback on architectural trade-offs such as latency, cost, scalability, and reliability.
+Architect is a frontend-only system design simulator that allows developers to visually design software architectures and receive real-time, deterministic feedback on architectural trade-offs such as latency, cost, scalability, and reliability.
 
-It is built as a strategy game for developers, not a toy project.
+The application is designed as a strategy game for developers, focused on learning and optimization rather than code execution.
 
-🚀 Why Architect Exists
+Purpose
 
-Most frontend projects demonstrate CRUD and UI rendering.
-Architect demonstrates something harder:
+This project demonstrates advanced frontend engineering by modeling complex system-design concepts entirely in the browser, with a strong emphasis on UI/UX, state management, and deterministic simulation logic.
 
-Modeling complex systems in the browser
+Key Features
 
-Translating abstract system-design concepts into visual feedback
+Scenario-based system design simulation
 
-Designing high-density, decision-driven UI/UX
+Drag-and-drop architecture canvas
 
-Managing non-trivial client-side state and deterministic logic
+Component configuration with immediate feedback
 
-This project is intended as a portfolio hero project.
+Real-time metrics calculation
 
-🧠 What the App Does
+Architecture scoring system (0–100)
 
-User selects a real-world scenario
+Anti-pattern detection and warnings
 
-Chat
+Build saving and comparison
 
-E-commerce
+Dark-mode, developer-tool-style UI
 
-Analytics
+Scenarios
 
-User builds an architecture by:
+Architect provides exactly three predefined scenarios:
 
-Dragging components onto a canvas
+Chat — latency-sensitive, high concurrency
 
-Connecting components
+E-commerce — balanced cost, reliability, and scalability
 
-Configuring component types
+Analytics — throughput and data processing focused
 
-The system continuously evaluates the design and shows:
+Each scenario applies different metric weightings and constraints.
 
-Latency (ms)
+Architecture Components
 
-Cost (relative units)
-
-Scalability (%)
-
-Reliability (%)
-
-Overall Architecture Score (0–100)
-
-The app detects architectural anti-patterns and shows warnings.
-
-Users can save and compare multiple architecture builds.
-
-All logic runs entirely in the browser.
-
-🎮 Core Gameplay Loop
-Select Scenario
-   ↓
-Build Architecture
-   ↓
-See Metrics & Warnings
-   ↓
-Optimize Design
-   ↓
-Save & Compare Builds
-
-
-This loop runs continuously with real-time feedback.
-
-🧩 Architecture Components
-
-The following components can be added to the canvas:
+Users can build architectures using the following components:
 
 Frontend
 
@@ -111,40 +81,39 @@ JWT
 
 OAuth
 
-Each configuration affects metrics deterministically.
+Each component configuration directly affects system metrics.
 
-📊 Metrics & Scoring
+Metrics Engine
 
-The Metrics Engine calculates:
+The Metrics Engine evaluates architectures in real time using deterministic formulas.
 
-Latency
-Based on component hops, architecture depth, and configuration overhead
+Metrics Calculated
 
-Cost
-Relative infrastructure cost based on selected components
+Latency — milliseconds
 
-Scalability
-Ability to handle increased traffic for the selected scenario
+Cost — relative units
 
-Reliability
-Penalties for single points of failure and missing redundancy
+Scalability — percentage score
+
+Reliability — percentage score
 
 Architecture Score
 
-A weighted score (0–100) is calculated based on scenario priorities.
-Weights differ per scenario (e.g. latency-heavy vs cost-sensitive).
+Numerical score between 0 and 100
 
-There is no randomness in scoring.
+Weighted based on selected scenario priorities
 
-⚠️ Anti-Patterns
+Updated within 100ms on any architecture change
 
-The system detects common architectural mistakes, such as:
+Anti-Pattern Detection
 
-High-scale scenario without caching
+The system identifies common architectural mistakes, including:
 
-Monolithic backend under heavy traffic
+Missing cache in read-heavy scenarios
 
-Excessive hop count causing high latency
+Monolithic backend in high-scale scenarios
+
+Excessive component hops increasing latency
 
 Warnings:
 
@@ -152,23 +121,48 @@ Are visually distinct
 
 Do not block progress
 
-Disappear when the issue is resolved
+Automatically resolve when corrected
 
-🧑‍🎓 Beginner-Friendly, Expert-Deep
+User Flow
 
-Tooltips explain each component and option
+Select a scenario
 
-Contextual help for configuration choices
+Build architecture on the canvas
 
-Example architectures available per scenario
+Configure components
 
-Advanced users can inspect calculation logic
+View real-time metrics and warnings
 
-The UI progressively reveals complexity.
+Optimize design
 
-🛠 Tech Stack
+Save and compare builds
 
-Frontend Only
+Build Management
+
+Save architecture designs as Builds
+
+Persist builds in browser localStorage
+
+Load previously saved builds
+
+Compare up to three builds side-by-side
+
+Highlight the highest-scoring architecture
+
+UI / UX Principles
+
+Dark mode by default
+
+Developer-tool aesthetic
+
+High information density with clear hierarchy
+
+Smooth animations (150–300ms)
+
+Accessible contrast and typography
+
+Technology Stack
+Frontend
 
 Next.js (App Router)
 
@@ -178,37 +172,35 @@ Tailwind CSS
 
 shadcn/ui
 
-Zustand (state management)
+Zustand
 
-React Flow (architecture canvas)
+React Flow
 
-Recharts (metrics visualization)
+Recharts
 
-Framer Motion (animations)
+Framer Motion
 
-Storage
+Data & Storage
 
-Browser localStorage
+Browser localStorage only
 
 Backend
 
-None
+None (fully client-side)
 
-🎨 UI / UX Principles
+Constraints
 
-Dark mode by default
+No backend services
 
-Developer-tool aesthetic
+No external APIs
 
-High information density without clutter
+Fully deterministic simulation
 
-Smooth animations (150–300ms)
+Offline-capable after initial load
 
-Clear visual hierarchy and spacing
+No authentication or user accounts
 
-Designed to feel like DevTools × Strategy Game.
-
-📦 Project Structure (High Level)
+Project Structure
 /app
   /scenarios
   /builder
@@ -225,36 +217,18 @@ Designed to feel like DevTools × Strategy Game.
 /store
 /hooks
 
-🧪 Constraints (Intentional)
+What This Project Demonstrates
 
-No backend or APIs
+Complex frontend state modeling
 
-Fully deterministic behavior
-
-Works offline after initial load
-
-No authentication
-
-No AI-generated decisions
-
-These constraints are intentional to keep the focus on frontend engineering and UX.
-
-📈 What This Project Demonstrates
-
-Advanced frontend state modeling
-
-Complex UI interaction design
+Interactive data visualization
 
 Deterministic simulation logic
 
-Performance-aware rendering
+High-density UI/UX design
 
-Product-level UX thinking
+Product-level system thinking
 
-📌 Status
-
-This project is actively developed as a portfolio showcase.
-
-📄 License
+License
 
 MIT
