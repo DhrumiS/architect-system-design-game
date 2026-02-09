@@ -1,26 +1,26 @@
-import { Architecture, Metrics, Scenario } from '@/models';
+import { Architecture, Metrics, Scenario, ComponentConfig } from '@/models';
 
 // Base latency values for each component configuration (in milliseconds)
-const BASE_LATENCY = {
+const BASE_LATENCY: Record<keyof ComponentConfig, Record<string, number>> = {
   frontend: { spa: 50, ssr: 100, cdn: 20 },
   backend: { monolith: 30, microservices: 50 },
   database: { sql: 40, nosql: 30 },
   cache: { redis: 5, none: 0 },
   queue: { kafka: 20, none: 0 },
   auth: { jwt: 10, oauth: 30 }
-} as const;
+};
 
 // Base cost values for each component configuration (relative units)
-const BASE_COST = {
+const BASE_COST: Record<keyof ComponentConfig, Record<string, number>> = {
   frontend: { spa: 5, ssr: 15, cdn: 25 },
   backend: { monolith: 20, microservices: 40 },
   database: { sql: 30, nosql: 25 },
   cache: { redis: 15, none: 0 },
   queue: { kafka: 20, none: 0 },
   auth: { jwt: 5, oauth: 10 }
-} as const;
+};
 
-// Additional latency per connection hop (in milliseconds)
+// Latency added per connection hop (in milliseconds)
 const HOP_LATENCY = 15;
 
 /**
@@ -34,8 +34,8 @@ function calculateLatency(architecture: Architecture): number {
   
   // Sum component latencies
   architecture.components.forEach(comp => {
-    const configKey = comp.config as keyof typeof BASE_LATENCY[typeof comp.type];
-    totalLatency += BASE_LATENCY[comp.type][configKey];
+    const latencyValue = BASE_LATENCY[comp.type][comp.config as string];
+    totalLatency += latencyValue || 0;
   });
   
   // Add hop latency
@@ -63,8 +63,8 @@ function calculateCost(architecture: Architecture): number {
   let totalCost = 0;
   
   architecture.components.forEach(comp => {
-    const configKey = comp.config as keyof typeof BASE_COST[typeof comp.type];
-    totalCost += BASE_COST[comp.type][configKey];
+    const costValue = BASE_COST[comp.type][comp.config as string];
+    totalCost += costValue || 0;
   });
   
   // Normalize to 0-100 scale
@@ -118,8 +118,9 @@ function calculateReliability(architecture: Architecture): number {
 }
 
 /**
- * Calculate overall score based on scenario-weighted metrics
- * - Weighted average based on scenario priorities
+ * Calculate overall score based on scenario weights
+ * - Weighted average of all metrics
+ * - Latency and cost are inverted (lower is better)
  */
 function calculateOverallScore(
   metrics: Omit<Metrics, 'overallScore'>,
