@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 interface WarningBadgeProps {
   warning: Warning;
   onDismiss?: (id: string) => void;
-  onClick?: (componentId?: string) => void;
+  onClick?: (warning: Warning) => void;
 }
 
 export function WarningBadge({ warning, onDismiss, onClick }: WarningBadgeProps) {
@@ -35,14 +35,14 @@ export function WarningBadge({ warning, onDismiss, onClick }: WarningBadgeProps)
     }
   };
 
-  const getBorderColor = () => {
+  const getColorClass = () => {
     switch (warning.type) {
       case 'error':
-        return 'border-red-500/50';
+        return 'border-red-500/50 bg-red-500/10';
       case 'warning':
-        return 'border-yellow-500/50';
+        return 'border-yellow-500/50 bg-yellow-500/10';
       case 'info':
-        return 'border-blue-500/50';
+        return 'border-blue-500/50 bg-blue-500/10';
     }
   };
 
@@ -52,32 +52,25 @@ export function WarningBadge({ warning, onDismiss, onClick }: WarningBadgeProps)
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
       transition={{ duration: 0.2 }}
-      className={`flex items-start gap-2 p-3 rounded-lg border-2 ${getBorderColor()} bg-card hover:bg-accent transition-colors ${
-        warning.componentId ? 'cursor-pointer' : ''
-      }`}
-      onClick={() => onClick?.(warning.componentId)}
+      className={`flex items-start gap-3 p-3 rounded-lg border-2 ${getColorClass()} cursor-pointer hover:scale-[1.02] transition-transform`}
+      onClick={() => onClick?.(warning)}
     >
-      <div className="flex-shrink-0 mt-0.5">
+      <div className="mt-0.5">
         {getIcon()}
       </div>
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium mb-1">
-          <Badge variant={getVariant()} className="mr-2">
-            {warning.type.toUpperCase()}
-          </Badge>
+          {warning.type.charAt(0).toUpperCase() + warning.type.slice(1)}
         </div>
-        <p className="text-sm text-foreground">{warning.message}</p>
-        {warning.componentId && (
-          <p className="text-xs text-muted-foreground mt-1">
-            Click to highlight component
-          </p>
-        )}
+        <div className="text-xs text-muted-foreground">
+          {warning.message}
+        </div>
       </div>
       {onDismiss && (
         <Button
           variant="ghost"
           size="icon"
-          className="h-6 w-6 flex-shrink-0"
+          className="h-6 w-6 shrink-0"
           onClick={(e) => {
             e.stopPropagation();
             onDismiss(warning.id);
