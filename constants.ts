@@ -1,4 +1,4 @@
-import { Scenario, ScenarioType, ComponentType } from './models';
+import { ScenarioType, Scenario, ComponentType } from './models';
 
 // Scenario configurations with requirements and metric weights
 export const SCENARIOS: Record<ScenarioType, Scenario> = {
@@ -110,24 +110,4 @@ export const COMPONENT_DEFINITIONS: Record<ComponentType, {
       oauth: 'OAuth 2.0 - Third-party authentication'
     }
   }
-};
-
-// Component type labels for UI display
-export const COMPONENT_LABELS: Record<ComponentType, string> = {
-  frontend: 'Frontend',
-  backend: 'Backend',
-  database: 'Database',
-  cache: 'Cache',
-  queue: 'Queue',
-  auth: 'Auth'
-};
-
-// Color scheme for components (for visual distinction)
-export const COMPONENT_COLORS: Record<ComponentType, string> = {
-  frontend: 'bg-blue-500/20 border-blue-500',
-  backend: 'bg-green-500/20 border-green-500',
-  database: 'bg-purple-500/20 border-purple-500',
-  cache: 'bg-orange-500/20 border-orange-500',
-  queue: 'bg-yellow-500/20 border-yellow-500',
-  auth: 'bg-red-500/20 border-red-500'
 };
