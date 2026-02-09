@@ -31,43 +31,45 @@ interface ComponentNodeData {
 
 function ComponentNodeComponent({ data, selected }: NodeProps<ComponentNodeData>) {
   const definition = COMPONENT_DEFINITIONS[data.type];
-  
+  const icon = COMPONENT_ICONS[data.type];
+
   return (
     <motion.div
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.2 }}
-      className={`px-4 py-3 rounded-lg border-2 bg-card shadow-lg transition-all duration-200 min-w-[140px] ${
+      className={`px-4 py-3 rounded-lg border-2 bg-card shadow-lg transition-all duration-200 min-w-[160px] ${
         selected 
           ? 'border-primary shadow-primary/50' 
           : 'border-border hover:border-primary/50'
       }`}
     >
-      {/* Input Handle */}
+      {/* Connection Handles */}
       <Handle
         type="target"
         position={Position.Top}
         className="w-3 h-3 !bg-primary border-2 border-background"
       />
-      
-      <div className="flex items-center gap-2">
-        <div className={`${selected ? 'text-primary' : 'text-muted-foreground'}`}>
-          {COMPONENT_ICONS[data.type]}
-        </div>
-        <div className="flex-1">
-          <div className="font-semibold text-sm">{definition.name}</div>
-          <div className="text-xs text-muted-foreground uppercase">
-            {data.config}
-          </div>
-        </div>
-      </div>
-      
-      {/* Output Handle */}
       <Handle
         type="source"
         position={Position.Bottom}
         className="w-3 h-3 !bg-primary border-2 border-background"
       />
+
+      {/* Node Content */}
+      <div className="flex items-center gap-3">
+        <div className={`text-primary ${selected ? 'scale-110' : ''} transition-transform`}>
+          {icon}
+        </div>
+        <div className="flex-1">
+          <div className="font-semibold text-sm text-foreground">
+            {definition.name}
+          </div>
+          <div className="text-xs text-muted-foreground uppercase font-medium mt-0.5">
+            {data.config}
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }

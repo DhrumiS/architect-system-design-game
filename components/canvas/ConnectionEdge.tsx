@@ -38,7 +38,7 @@ function ConnectionEdgeComponent({
         }}
       />
       
-      {/* Animated pulse effect on the edge */}
+      {/* Animated pulse effect on selected edge */}
       {selected && (
         <motion.circle
           r="4"
@@ -56,7 +56,7 @@ function ConnectionEdgeComponent({
           </animateMotion>
         </motion.circle>
       )}
-      
+
       <EdgeLabelRenderer>
         {selected && (
           <motion.div
@@ -69,7 +69,7 @@ function ConnectionEdgeComponent({
             }}
             className="nodrag nopan"
           >
-            <div className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-md shadow-lg">
+            <div className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-md shadow-lg font-medium">
               +15ms
             </div>
           </motion.div>
